@@ -51,12 +51,19 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/api/auth/**",
-                    "/api/face/check",
-                    "/api/face/liveness-check",
-                    "/api/attendance/mark",
-                    "/api/attendance/all",
-                    "/api/attendance/date",
-                    "/api/attendance/user/**"
+      				"/",
+        			"/health",
+        			"/actuator/health",
+
+        			"/api/auth/**",
+
+        			"/api/face/check",
+        			"/api/face/liveness-check",
+
+        			"/api/attendance/mark",
+        			"/api/attendance/all",
+        			"/api/attendance/date",
+       				"/api/attendance/user/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             )
@@ -65,3 +72,8 @@ public class SecurityConfig {
         return http.build();
     }
 }
+
+
+
+
+
