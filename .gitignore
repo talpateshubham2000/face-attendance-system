@@ -55,3 +55,7 @@ logs/
 ########################################
 .DS_Store
 Thumbs.db
+
+# STS / Eclipse
+**/bin/
+.factorypath
