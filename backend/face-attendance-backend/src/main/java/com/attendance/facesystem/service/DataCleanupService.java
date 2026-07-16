@@ -34,7 +34,7 @@ public class DataCleanupService {
     private final AttendanceRepository attendanceRepository;
 
     // Runs every hour; deletes any account older than 24 hours along with its data
-    @Scheduled(fixedRate = 60 * 60 * 1000)
+    //@Scheduled(fixedRate = 60 * 60 * 1000)
     @Transactional
     public void deleteExpiredAccounts() {
         LocalDateTime cutoff = LocalDateTime.now().minusHours(24);
