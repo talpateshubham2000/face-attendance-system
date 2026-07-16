@@ -1,0 +1,335 @@
+/* ============================================================
+   DESIGN TOKENS
+   Concept: a calm, late-night security-kiosk console — the kind
+   of screen you'd trust standing in a doorway. Deep ink background,
+   a single electric-teal "scan" accent, semantic red/green reserved
+   ONLY for the live face-lock states so they carry real meaning
+   instead of decorating everything.
+   ============================================================ */
+
+:root {
+  /* Color */
+  --bg: #0a0e1a;
+  --bg-gradient: radial-gradient(ellipse 120% 80% at 50% -10%, #10182c 0%, #0a0e1a 55%);
+  --surface: #111827;
+  --surface-raised: #161f34;
+  --surface-hover: #1b2540;
+  --border: #232f4d;
+  --border-soft: #1a2340;
+
+  --text-primary: #eef2ff;
+  --text-secondary: #97a3c4;
+  --text-muted: #5d6890;
+
+  --accent: #2fe6c9;
+  --accent-dim: #1a8f7c;
+  --accent-glow: rgba(47, 230, 201, 0.35);
+
+  --success: #34d399;
+  --success-glow: rgba(52, 211, 153, 0.4);
+  --danger: #fb5a5a;
+  --danger-glow: rgba(251, 90, 90, 0.4);
+  --warning: #fbbf6b;
+
+  /* Type */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Layout */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+  --transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-gradient);
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+input {
+  font-family: var(--font-body);
+}
+
+a {
+  color: inherit;
+}
+
+/* ---------- App shell ---------- */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow-card);
+}
+
+.card-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.card-subtitle {
+  margin-top: 8px;
+  font-size: 14.5px;
+  color: var(--text-secondary);
+}
+
+/* ---------- Form elements ---------- */
+
+.field {
+  margin-top: 22px;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 13px 15px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 15px;
+  outline: none;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.field input::placeholder {
+  color: var(--text-muted);
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.field-error {
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: var(--danger);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), opacity var(--transition-base);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #06251f;
+  margin-top: 28px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 8px 24px -6px var(--accent-glow);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.btn-ghost:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+/* ---------- Banners ---------- */
+
+.banner {
+  margin-top: 20px;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.banner-error {
+  background: rgba(251, 90, 90, 0.1);
+  border: 1px solid rgba(251, 90, 90, 0.3);
+  color: #ffb3b3;
+}
+
+.banner-info {
+  background: rgba(47, 230, 201, 0.08);
+  border: 1px solid rgba(47, 230, 201, 0.25);
+  color: var(--accent);
+}
+
+/* ---------- Top nav / status strip ---------- */
+
+.status-strip {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+.status-strip .brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.status-strip .brand-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ---------- Progress dots (photo capture) ---------- */
+
+.dot-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background var(--transition-base), transform var(--transition-base);
+}
+
+.dot.filled {
+  background: var(--accent);
+  transform: scale(1.15);
+}
+
+/* ---------- Utility ---------- */
+
+.text-center {
+  text-align: center;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 0;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}

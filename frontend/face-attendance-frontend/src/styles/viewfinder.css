@@ -1,0 +1,197 @@
+/* ============================================================
+   SIGNATURE ELEMENT: the scan viewfinder.
+   Corner brackets (not a plain square) that sit over the live
+   camera feed. Idle = muted brackets + a slow sweeping scan line.
+   ADJUST = brackets flash coral red. GOOD = brackets snap outward
+   slightly and glow teal/green while a progress ring fills for
+   the 3-second hold.
+   ============================================================ */
+
+.viewfinder-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--border);
+}
+
+.viewfinder-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* mirror, like a mirror/webcam users expect */
+}
+
+.viewfinder-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* the bracket "box" sits centered, slightly inset from the video edges */
+.bracket-box {
+  position: absolute;
+  top: 12%;
+  left: 20%;
+  right: 20%;
+  bottom: 12%;
+  transition: inset var(--transition-base);
+}
+
+.bracket-box.good {
+  top: 9%;
+  left: 17%;
+  right: 17%;
+  bottom: 9%;
+}
+
+.corner {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-color: var(--text-muted);
+  border-style: solid;
+  border-width: 0;
+  transition: border-color var(--transition-base), width var(--transition-base), height var(--transition-base);
+}
+
+.corner.tl {
+  top: 0;
+  left: 0;
+  border-top-width: 3px;
+  border-left-width: 3px;
+  border-top-left-radius: 10px;
+}
+.corner.tr {
+  top: 0;
+  right: 0;
+  border-top-width: 3px;
+  border-right-width: 3px;
+  border-top-right-radius: 10px;
+}
+.corner.bl {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 3px;
+  border-left-width: 3px;
+  border-bottom-left-radius: 10px;
+}
+.corner.br {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 3px;
+  border-right-width: 3px;
+  border-bottom-right-radius: 10px;
+}
+
+.bracket-box.adjust .corner {
+  border-color: var(--danger);
+  filter: drop-shadow(0 0 6px var(--danger-glow));
+}
+
+.bracket-box.good .corner {
+  border-color: var(--success);
+  filter: drop-shadow(0 0 8px var(--success-glow));
+  width: 40px;
+  height: 40px;
+}
+
+/* slow sweeping scan line while idle / searching */
+.scan-line {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.7;
+  animation: sweep 2.6s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  0% {
+    top: 12%;
+  }
+  50% {
+    top: 86%;
+  }
+  100% {
+    top: 12%;
+  }
+}
+
+.bracket-box.adjust ~ .scan-line,
+.bracket-box.good ~ .scan-line {
+  display: none;
+}
+
+/* status pill under the camera */
+.status-pill {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.status-pill .dot-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-pill.state-idle {
+  color: var(--text-muted);
+}
+.status-pill.state-idle .dot-indicator {
+  background: var(--text-muted);
+}
+
+.status-pill.state-adjust {
+  color: #ff9d9d;
+}
+.status-pill.state-adjust .dot-indicator {
+  background: var(--danger);
+  box-shadow: 0 0 8px var(--danger-glow);
+}
+
+.status-pill.state-good {
+  color: #8ff0d6;
+}
+.status-pill.state-good .dot-indicator {
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success-glow);
+}
+
+/* countdown ring shown briefly in the corner while holding a good lock */
+.hold-ring {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+}
+
+.hold-ring svg {
+  transform: rotate(-90deg);
+}
+
+.hold-ring circle {
+  fill: none;
+  stroke-width: 3;
+}
+
+.hold-ring .track {
+  stroke: rgba(255, 255, 255, 0.12);
+}
+
+.hold-ring .progress {
+  stroke: var(--success);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 120ms linear;
+}
